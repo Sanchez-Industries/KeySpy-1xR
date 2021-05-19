@@ -1,0 +1,33 @@
+#!/usr/bin/python3
+# =-=-=-=-=-=-=-=-=-=-=-=-=-= 
+#  add_header script v1.0.0
+#  By Rick Sanchez D-634 !!
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("header_file", help="File with the header content inside(that can take a lot of lines...), it's the model of header to add into the destination file.", type=str)
+parser.add_argument("destination_file", help="File of the destination of this header implementation.", type=str)
+parser.add_argument("-anl", "--add-new-line", help="Add a new line between the two parts: after the hearder, a new line can be write with this option, just before the data provide from the destination file.", action="store_true")
+#
+args = parser.parse_args()
+h_file,d_file = args.header_file, args.destination_file
+if args.add_new_line:
+	opt_nl = "\n"
+else:
+	opt_nl = ""
+#
+h_data=""
+with open(h_file,"rb") as f1:
+	h_data = f1.read().decode()
+	f1.close()
+#
+d_data=""
+with open(d_file,"rb") as f2:
+	d_data = f2.read().decode()
+	f2.close()
+#
+with open(d_file,"wb") as f3:
+	buffer = h_data+opt_nl+d_data
+	f3.write(buffer.encode())
+	f3.close()
+
